@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import PrivateRoute from "./Routes/PrivateRoute";
 import PublicRoute from "./Routes/PublicRoute";
-import Dashboard from "./modules/DashBoard/Dashboard";
 import Register from "./modules/Authentication/Registration";
 import Login from "./modules/Authentication/Login";
+import Dashboard from "./modules/DashBoard/Dashboard";
 
 const App = () => {
   return (

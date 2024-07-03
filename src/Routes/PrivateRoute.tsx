@@ -3,7 +3,6 @@ import Cookies from "js-cookie";
 
 const PrivateRoute = () => {
   const name = Cookies.get("token");
-  console.log(name);
 
   return name ? <Outlet /> : <Navigate to="/" />;
 };
