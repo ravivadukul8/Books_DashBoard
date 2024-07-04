@@ -31,11 +31,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     if (userExists) {
       toast.error("User already registered.");
-    }
+    }else{
     users.push({ email, password });
     localStorage.setItem("users", JSON.stringify(users));
     navigate("/");
     toast.success("Registration successful.");
+    }
   };
 
   const logout = () => {
