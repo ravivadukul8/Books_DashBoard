@@ -1,12 +1,13 @@
 import { createContext, ReactNode, useState } from "react";
 import { Book, BookContextType } from "../Types/Books-types";
-import Cookies from "js-cookie";
 import { v4 as uuidv4 } from "uuid";
+import Cookies from "js-cookie";
 
 const BookContext = createContext<BookContextType | undefined>(undefined);
 
 const BooksProvider = ({ children }: { children: ReactNode }) => {
   const [books, setBooks] = useState<Book[]>([]);
+  const [bookEdit, setBookEdit] = useState<Book | null>(null);
 
   const listAllData = (books: any) => {
     setBooks(books);
@@ -29,13 +30,34 @@ const BooksProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem("books", JSON.stringify(deleteData));
   };
 
+  const editBook = (book: Omit<Book, "id">) => {
+    setBookEdit(book);
+  };
+
+  const handelEditBook = (updatedBook: any) => {
+    setBooks((prevBooks) =>
+      prevBooks.map((book) =>
+        book.id === updatedBook.id ? { ...book, ...updatedBook } : book
+      )
+    );
+    setBookEdit(null);
+  };
+
+  const clearEditState = () => {
+    setBookEdit(null);
+  };
+
   return (
     <BookContext.Provider
       value={{
         books,
+        bookEdit,
         listAllData,
         addBook,
         deleteBook,
+        editBook,
+        handelEditBook,
+        clearEditState,
       }}
     >
       {children}

@@ -1,11 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import Header from "./Components/HeaderBar/Header";
 import BooksList from "./Components/BookStore/BooksList";
+import BooksForm from "./Components/BookStore/BooksForm";
 import Cookies from "js-cookie";
 import { BookContext } from "../../contexts/BooksListContext";
 import { IoCloseCircleOutline } from "react-icons/io5";
-import BooksForm from "./Components/BookStore/BooksForm";
-
 const dummyBooks = [
   {
     title: "Dummy Book 1",
@@ -13,6 +12,7 @@ const dummyBooks = [
     year: 2021,
     genre: "Fiction",
     userName: "",
+    id: "1",
   },
   {
     title: "Dummy Book 2",
@@ -20,11 +20,12 @@ const dummyBooks = [
     year: 2022,
     genre: "Non-Fiction",
     userName: "",
+    id: "2",
   },
 ];
 
 const Dashboard = () => {
-  const { listAllData } = useContext(BookContext);
+  const { listAllData, clearEditState } = useContext(BookContext);
   const [form, setForm] = useState(false);
   const storedBooks = localStorage.getItem("books");
   const allData = storedBooks ? JSON.parse(storedBooks) : [];
@@ -42,11 +43,17 @@ const Dashboard = () => {
     listAllData(filterUserData);
   }, [allData.length]);
 
+  const handelEdit = () => {
+    setForm(true);
+  };
+
   const handelAdd = () => {
+    clearEditState();
     setForm(true);
   };
 
   const handelClose = () => {
+    clearEditState();
     setForm(false);
   };
 
@@ -70,8 +77,9 @@ const Dashboard = () => {
             />
           )}
         </div>
+
         {form && <BooksForm />}
-        <BooksList />
+        <BooksList editButton={handelEdit} />
       </div>
     </div>
   );

@@ -10,4 +10,6 @@ export interface BookContextType {
   books: Book[];
   addBook: (book: Book) => void;
   deleteBook: (id: String) => void;
+  editBook: (book: Book) => void;
+  handelEditBook: (book: Book) => void;
 }

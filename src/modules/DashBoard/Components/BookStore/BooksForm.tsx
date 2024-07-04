@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { BookContext } from "../../../../contexts/BooksListContext";
@@ -8,7 +8,7 @@ const BooksForm = () => {
   if (!context) {
     throw new Error("AddBookForm must be used within a BookProvider");
   }
-  const { addBook } = context;
+  const { addBook, bookEdit, handelEditBook } = context;
 
   const init = {
     title: "",
@@ -29,11 +29,25 @@ const BooksForm = () => {
         genre: Yup.string().required("Genre is required"),
       }),
       onSubmit: (values, { resetForm }) => {
-        addBook({ ...values, year: Number(values.year) });
-
+        if (bookEdit?.id) {
+          handelEditBook({ ...values, id: bookEdit?.id });
+        } else {
+          addBook({ ...values, year: Number(values.year) });
+        }
         resetForm();
       },
     });
+
+  useEffect(() => {
+    if (bookEdit) {
+      setValues({
+        title: bookEdit.title,
+        author: bookEdit.author,
+        year: bookEdit.year,
+        genre: bookEdit.genre,
+      });
+    }
+  }, [bookEdit, setValues]);
 
   return (
     <form onSubmit={handleSubmit} className="mb-4">
@@ -93,7 +107,7 @@ const BooksForm = () => {
         type="submit"
         className="bg-green-500 text-white px-4 py-2 rounded"
       >
-        Save Book
+        {bookEdit?.id ? "Edit" : "Save"} Book
       </button>
     </form>
   );

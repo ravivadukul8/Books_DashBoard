@@ -1,13 +1,15 @@
 import { useContext, useMemo, useState } from "react";
 import { BookContext } from "../../../../contexts/BooksListContext";
-
-const BooksList = () => {
+import { FaSort } from "react-icons/fa6";
+import { FaSortUp } from "react-icons/fa";
+import { FaSortDown } from "react-icons/fa6";
+const BooksList = ({ editButton }: any) => {
   const bookList = useContext(BookContext);
 
   if (!bookList) {
     return null;
   }
-  const { books, deleteBook } = bookList;
+  const { books, deleteBook, editBook } = bookList;
 
   const [currentPage, setCurrentPage] = useState(1);
   const [booksPerPage] = useState(5);
@@ -60,35 +62,100 @@ const BooksList = () => {
     deleteBook(id);
   };
 
+  const handleEdit = (book: any) => {
+    editButton();
+    editBook(book);
+  };
+
   return (
     <div>
       <h4> Books Details</h4>
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           <tr>
-            <th
-              onClick={() => handleSort("title")}
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase  cursor-pointer"
-            >
-              Title
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase ">
+              <span>Title</span>
+              {sortConfig && sortConfig.key === "title" ? (
+                sortConfig.direction === "ascending" ? (
+                  <FaSortUp
+                    onClick={() => handleSort("title")}
+                    className="cursor-pointer"
+                  />
+                ) : (
+                  <FaSortDown
+                    onClick={() => handleSort("title")}
+                    className="cursor-pointer"
+                  />
+                )
+              ) : (
+                <FaSort
+                  className="cursor-pointer"
+                  onClick={() => handleSort("title")}
+                />
+              )}
             </th>
-            <th
-              onClick={() => handleSort("author")}
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase  cursor-pointer"
-            >
-              Author
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase ">
+              <span>Author</span>
+              {sortConfig && sortConfig.key === "author" ? (
+                sortConfig.direction === "ascending" ? (
+                  <FaSortUp
+                    onClick={() => handleSort("author")}
+                    className="cursor-pointer"
+                  />
+                ) : (
+                  <FaSortDown
+                    onClick={() => handleSort("author")}
+                    className="cursor-pointer"
+                  />
+                )
+              ) : (
+                <FaSort
+                  className="cursor-pointer"
+                  onClick={() => handleSort("author")}
+                />
+              )}
             </th>
-            <th
-              onClick={() => handleSort("year")}
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase  cursor-pointer"
-            >
-              Year
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+              <span>Year</span>
+              {sortConfig && sortConfig.key === "year" ? (
+                sortConfig.direction === "ascending" ? (
+                  <FaSortUp
+                    onClick={() => handleSort("year")}
+                    className="cursor-pointer"
+                  />
+                ) : (
+                  <FaSortDown
+                    onClick={() => handleSort("year")}
+                    className="cursor-pointer"
+                  />
+                )
+              ) : (
+                <FaSort
+                  className="cursor-pointer"
+                  onClick={() => handleSort("year")}
+                />
+              )}
             </th>
-            <th
-              onClick={() => handleSort("genre")}
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase  cursor-pointer"
-            >
-              Genre
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+              <span>Genre</span>
+              {sortConfig && sortConfig.key === "genre" ? (
+                sortConfig.direction === "ascending" ? (
+                  <FaSortUp
+                    onClick={() => handleSort("genre")}
+                    className="cursor-pointer"
+                  />
+                ) : (
+                  <FaSortDown
+                    onClick={() => handleSort("genre")}
+                    className="cursor-pointer"
+                  />
+                )
+              ) : (
+                <FaSort
+                  className="cursor-pointer"
+                  onClick={() => handleSort("genre")}
+                />
+              )}
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase  cursor-pointer">
               Action
@@ -103,6 +170,12 @@ const BooksList = () => {
               <td className="px-6 py-4 whitespace-nowrap">{book.year}</td>
               <td className="px-6 py-4 whitespace-nowrap">{book.genre}</td>
               <td className="px-6 py-4 whitespace-nowrap">
+                <button
+                  onClick={() => handleEdit(book)}
+                  className="text-blue-500 hover:text-blue-700 mr-2"
+                >
+                  Edit
+                </button>
                 <button
                   onClick={() => handleDelete(book.id)}
                   className="text-red-500 hover:text-red-700"
