@@ -5,26 +5,9 @@ import BooksForm from "./Components/BookStore/BooksForm";
 import Cookies from "js-cookie";
 import { BookContext } from "../../contexts/BooksListContext";
 import { IoCloseCircleOutline } from "react-icons/io5";
-const dummyBooks = [
-  {
-    title: "Dummy Book 1",
-    author: "Author 1",
-    year: 2021,
-    genre: "Fiction",
-    userName: "",
-    id: "1",
-  },
-  {
-    title: "Dummy Book 2",
-    author: "Author 2",
-    year: 2022,
-    genre: "Non-Fiction",
-    userName: "",
-    id: "2",
-  },
-];
+import { dummyBooks } from "../../constant/dummyBooksArray";
 
-const Dashboard = () => {
+const Dashboard: React.FC = () => {
   const { listAllData, clearEditState } = useContext(BookContext);
   const [form, setForm] = useState(false);
   const storedBooks = localStorage.getItem("books");
@@ -41,6 +24,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     listAllData(filterUserData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allData.length]);
 
   const handelEdit = () => {

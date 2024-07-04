@@ -1,13 +1,14 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { AuthContext } from "../../contexts/AuthContext";
 import { Link } from "react-router-dom";
+import { AuthContextType, LoginValues } from "../../Types/Authentication-types";
 
-const Login = () => {
-  const auth = useContext(AuthContext);
+const Login: React.FC = () => {
+  const auth = useContext<AuthContextType | null>(AuthContext);
 
-  const formik = useFormik({
+  const formik = useFormik<LoginValues>({
     initialValues: {
       email: "",
       password: "",
@@ -18,7 +19,7 @@ const Login = () => {
         .required("Enter Your Email."),
       password: Yup.string().required("Enter Your Password."),
     }),
-    onSubmit: (values) => {
+    onSubmit: (values: LoginValues) => {
       if (auth) {
         auth.login(values.email, values.password);
       } else {

@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { AuthContext } from "../../../../contexts/AuthContext";
 
-const Header = () => {
+const Header: React.FC = () => {
   const auth = useContext(AuthContext);
   return (
     <div className="w-full flex flex-row justify-between items-center p-5 bg-gray-600">

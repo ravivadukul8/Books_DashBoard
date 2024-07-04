@@ -2,8 +2,9 @@ import { useContext, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { BookContext } from "../../../../contexts/BooksListContext";
+import { BookValuesFormik } from "../../../../Types/Books-types";
 
-const BooksForm = () => {
+const BooksForm: React.FC = () => {
   const context = useContext(BookContext);
   if (!context) {
     throw new Error("AddBookForm must be used within a BookProvider");
@@ -18,7 +19,7 @@ const BooksForm = () => {
   };
 
   const { handleSubmit, values, errors, touched, handleChange, setValues } =
-    useFormik({
+    useFormik<BookValuesFormik>({
       initialValues: init,
       validationSchema: Yup.object({
         title: Yup.string().required("Title is required"),

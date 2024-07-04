@@ -9,7 +9,7 @@ const BooksProvider = ({ children }: { children: ReactNode }) => {
   const [books, setBooks] = useState<Book[]>([]);
   const [bookEdit, setBookEdit] = useState<Book | null>(null);
 
-  const listAllData = (books: any) => {
+  const listAllData = (books) => {
     setBooks(books);
   };
 
@@ -26,15 +26,15 @@ const BooksProvider = ({ children }: { children: ReactNode }) => {
     setBooks((prevBooks) => prevBooks.filter((book) => book.id !== id));
     const localData = localStorage.getItem("books");
     const allData = localData ? JSON.parse(localData) : [];
-    const deleteData = allData.filter((book: any) => book.id !== id);
+    const deleteData = allData.filter((book) => book.id !== id);
     localStorage.setItem("books", JSON.stringify(deleteData));
   };
 
-  const editBook = (book: Omit<Book, "id">) => {
+  const editBook = (book: Book) => {
     setBookEdit(book);
   };
 
-  const handelEditBook = (updatedBook: any) => {
+  const handelEditBook = (updatedBook: Book) => {
     setBooks((prevBooks) =>
       prevBooks.map((book) =>
         book.id === updatedBook.id ? { ...book, ...updatedBook } : book

@@ -1,13 +1,17 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { AuthContext } from "../../contexts/AuthContext";
 import { Link } from "react-router-dom";
+import {
+  AuthContextType,
+  RegisterValues,
+} from "../../Types/Authentication-types";
 
-const Register = () => {
-  const auth = useContext(AuthContext);
+const Register: React.FC = () => {
+  const auth = useContext<AuthContextType | null>(AuthContext);
 
-  const formik = useFormik({
+  const formik = useFormik<RegisterValues>({
     initialValues: {
       email: "",
       password: "",
@@ -18,7 +22,7 @@ const Register = () => {
         .min(6, "Password must be at least 6 characters")
         .required("Required"),
     }),
-    onSubmit: (values) => {
+    onSubmit: (values: RegisterValues) => {
       if (auth) {
         auth.register(values.email, values.password);
       } else {
