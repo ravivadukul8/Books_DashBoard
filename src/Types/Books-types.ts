@@ -9,4 +9,5 @@ export interface Book {
 export interface BookContextType {
   books: Book[];
   addBook: (book: Book) => void;
+  deleteBook: (id: String) => void;
 }

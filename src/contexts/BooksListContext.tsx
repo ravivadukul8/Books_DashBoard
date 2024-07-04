@@ -21,12 +21,21 @@ const BooksProvider = ({ children }: { children: ReactNode }) => {
     setBooks((prevBooks) => [...prevBooks, newBook]);
   };
 
+  const deleteBook = (id: string) => {
+    setBooks((prevBooks) => prevBooks.filter((book) => book.id !== id));
+    const localData = localStorage.getItem("books");
+    const allData = localData ? JSON.parse(localData) : [];
+    const deleteData = allData.filter((book: any) => book.id !== id);
+    localStorage.setItem("books", JSON.stringify(deleteData));
+  };
+
   return (
     <BookContext.Provider
       value={{
         books,
         listAllData,
         addBook,
+        deleteBook,
       }}
     >
       {children}

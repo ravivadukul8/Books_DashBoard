@@ -90,6 +90,9 @@ const BooksList = () => {
             >
               Genre
             </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase  cursor-pointer">
+              Action
+            </th>
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
@@ -99,6 +102,15 @@ const BooksList = () => {
               <td className="px-6 py-4 whitespace-nowrap">{book.author}</td>
               <td className="px-6 py-4 whitespace-nowrap">{book.year}</td>
               <td className="px-6 py-4 whitespace-nowrap">{book.genre}</td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                <button
+                  onClick={() => handleDelete(book.id)}
+                  className="text-red-500 hover:text-red-700"
+                >
+                  {" "}
+                  Delete
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
