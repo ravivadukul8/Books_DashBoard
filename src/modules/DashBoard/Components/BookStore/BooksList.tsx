@@ -67,7 +67,10 @@ const BooksList: React.FC = ({ editButton }: any) => {
 
   return (
     <div>
-      <h4> Books Details</h4>
+      <h4 className="text-2xl font-bold text-gray-800 mb-4 text-center">
+        Books Details
+      </h4>
+
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           <tr>
